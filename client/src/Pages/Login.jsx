@@ -3,6 +3,7 @@ import { Link ,useNavigate } from "react-router-dom";
 import { Loader } from "../Components";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useAuth } from '../Context/UserProvider';
 
 export const Login = () => {
 
@@ -10,10 +11,10 @@ export const Login = () => {
     const [pass, setPass] = useState("")
 
     const [loading, setLoading] = useState(false);
-
     const [showPass, setShowPass] = useState(false)
 
     const navigate = useNavigate();
+    const {setUser} = useAuth()
 
     const baseUrl = "http://localhost:5000"
     const handleLogin = async (e) => {
@@ -24,11 +25,12 @@ export const Login = () => {
             const {data} = await axios.post(`${baseUrl}/api/v1/auth/login`, {
                 username,
                 password: pass
-            })
+            }, { withCredentials: true })
 
             if(data.success){
-                toast.success("Login Success")
-                localStorage.setItem('token', data.token)
+                toast.success("Login Success");
+                setUser(data.user);
+                localStorage.setItem('token', data.token);
                 navigate("/home");
             }
             setLoading(false)

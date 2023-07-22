@@ -56,7 +56,7 @@ export const login = async (req, res, next) => {
         }, process.env.JWT_SECRET, { expiresIn: "24h"})
 
 
-        res.status(200).send({
+        res.status(200).cookie('token', token).send({
             success: true,
             message: "Login success",
             user: {
@@ -70,3 +70,34 @@ export const login = async (req, res, next) => {
         next(err);
     }
 }
+
+
+export const getUser = async (req, res, next) => {
+    try{
+    
+        const user = await UserModel.findOne({_id: req.user.userId})
+        if(!user) return next("User Not found")
+
+        const { password, ...rest} = Object.assign({}, user.toJSON());
+        res.status(200).send({
+            success: true,
+            rest
+        })
+
+    }catch(err){
+        next("Error: " + err);
+    }
+}
+
+
+export const logout = async (req, res, next) => {
+    try{
+        res.status(200).cookie('token', '').send({
+            success: true,
+            message: "Logout success"
+        })
+    }catch(err){
+        next("Error: " + err);
+    }
+}
+

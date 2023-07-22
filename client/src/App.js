@@ -9,7 +9,7 @@ function App() {
     <>
     <ToastContainer />
 
-    <div className='w-full max-w-[1100px] mx-auto px-2 mt-5 min-h-[80vh]'>
+    <div className='w-full max-w-[1100px] mx-auto px-2 mt-5 min-h-[95vh]'>
       <Header/>
       <Router/>
     </div>

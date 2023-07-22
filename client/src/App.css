@@ -94,3 +94,11 @@ body{
 .col-1, .col-2{
   flex: 1 1 450px;
 }
+.wrapperClassName {
+  height: 500px;
+  padding: 10px ;
+}
+.ql-editor {
+  min-height: 18em;
+  border: 1px solid gray;
+}
