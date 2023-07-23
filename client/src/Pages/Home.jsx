@@ -2,23 +2,31 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 const Card = (data) => {
-  const {title, summary, content, banner, createdAt, author} = data.data;
+  const {_id, title, summary, content, banner, createdAt, author} = data.data;
+  // console.log(data)
   const baseUrl = "http://localhost:5000/"
   return (
     <>
       <div className='row gap-3 rounded-md p-2 shadow-md mb-3'>
         <div className='col-1'>
-          <img src={`${baseUrl}${banner}` || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysFdX_G4jpBhsF48Jpdoil4Y7A3yNV4T6SzzXmGPySk-N9hISAB9mPcqXdTc1mMRTJEs&usqp=CAU"} alt="blog" 
-          className='object-contain rounded-sm w-full'
-          />
+          <Link to={`/blog/${_id}`}>
+            <img src={`${baseUrl}${banner}` || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysFdX_G4jpBhsF48Jpdoil4Y7A3yNV4T6SzzXmGPySk-N9hISAB9mPcqXdTc1mMRTJEs&usqp=CAU"} alt="blog" 
+            className='object-contain rounded-sm w-full'
+            />
+          </Link>
         </div>
-        <div className='col-2 sm:py-5 py-3'>
+        <div className='col-2 sm:py-5 py-3 relative overflow-hidden'>
           <p className='text-sm mb-4'>Published by: @{author.username} on <b> 
           {format(new Date(createdAt), ' MMM d, yyyy HH:mm')}</b></p>
-          <h2 className='text-2xl font-semibold mb-2'>{title}</h2>
-          <p className=''>{summary}</p>
+          <h2 className='text-2xl font-semibold mb-2'>
+          <Link to={`/blog/${_id}`}>
+            {title}
+          </Link>
+          </h2>
+          <p >{summary}</p>
         </div>
       </div>
     </>

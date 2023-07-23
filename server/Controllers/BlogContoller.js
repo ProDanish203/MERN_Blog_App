@@ -55,3 +55,19 @@ export const getBlogs = async (req, res, next) => {
         next(error)
     }
 }
+
+export const getSingleBlog = async (req, res, next) => {
+    try{
+        const {id} = req.params;
+        const blog = await BlogModel.find({_id: id})
+        .populate("author", ['username'])
+
+        res.status(200).send({
+            success: true,
+            blog
+        })
+
+    }catch(error){
+        next(error)
+    }
+}
