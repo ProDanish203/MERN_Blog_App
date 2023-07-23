@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { Loader } from '../Components';
 
 const Card = (data) => {
-  const {_id, title, summary, content, banner, createdAt, author} = data.data;
-  // console.log(data)
+  const {_id, title, summary, banner, createdAt, author} = data.data;
   const baseUrl = "http://localhost:5000/"
   return (
     <>
@@ -60,9 +60,9 @@ export const Home = () => {
           blogs.length > 0 ? blogs.map((blog) => (
             <Card key={blog._id} data={blog}/>
           )) : (
-            <>
-            No Posts to show
-            </>
+            <div className='w-full flex items-center justify-center'>
+              <Loader dark={true}/>
+            </div>
           )
         }
       </div>

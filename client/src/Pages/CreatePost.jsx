@@ -1,61 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { convertToRaw, EditorState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
-import { Input } from '../Components';
+import React, { useState } from 'react'
+import { Input, Loader } from '../Components';
 import { convertImage } from "../Helpers/ConvertImage";
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-
-{/* <Editor
-    editorState={editorState}
-    toolbarClassName="toolbarClassName"
-    wrapperClassName="wrapperClassName"
-    editorClassName="editorClassName"
-    onEditorStateChange={onEditorStateChange}
-    mention={{
-      separator: " ",
-      trigger: "@",
-      suggestions: [
-        { text: "APPLE", value: "apple" },
-        { text: "BANANA", value: "banana", url: "banana" },
-        { text: "CHERRY", value: "cherry", url: "cherry" },
-        { text: "DURIAN", value: "durian", url: "durian" },
-        { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
-        { text: "FIG", value: "fig", url: "fig" },
-        { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
-        { text: "HONEYDEW", value: "honeydew", url: "honeydew" }
-      ]
-    }}
-    /> */}
-
-  // const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  // const [text, setText] = useState();
-  // const onEditorStateChange = function (editorState) {
-  // setEditorState(editorState);
-  // const { blocks } = convertToRaw(editorState.getCurrentContent());
-  //     let text = editorState.getCurrentContent().getPlainText("\u0001");
-  //     setText(text);
-  // };
-
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image'],
-    ['clean'],
-  ],
-};
+import { Editor } from "../Components";
 
 export const CreatePost = () => {
 
@@ -144,12 +92,7 @@ export const CreatePost = () => {
     </div>
 
     <div className='mt-8 mb-4 z-50 min-h-[200px]'>
-      <ReactQuill
-      value={content}
-      theme={'snow'}
-      onChange={setContent}
-      placeholder="Start writing your blog here..."
-      modules={modules} />
+      <Editor content={content} setContent={setContent}/>
     </div>
 
     <div className='my-5'>
@@ -161,7 +104,7 @@ export const CreatePost = () => {
 
         <button 
         className='bg-green-700 text-white px-4 py-2 rounded-md cursor-pointer'
-        type='submit'>Publish</button>
+        type='submit'>{loading ? <Loader/> : "Publish"}</button>
       </div>
     </div>
 
